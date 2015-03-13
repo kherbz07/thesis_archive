@@ -25,7 +25,11 @@
 				<td><?= $user['first_name'] ?></td>
 				<td><?= $user['middle_name'] ?></td>
 				<td><?= $user['last_name'] ?></td>
-				<td><button class="edit-btn">Edit</button></td>
+				<td>
+					<button class="edit-btn">Edit</button>
+					<button class="del-btn">Delete</button>
+				</td>
+			</tr>
 			</tr>
 		<?php endforeach ?>
 	</tbody>
@@ -91,7 +95,10 @@
 			<tr>
 				<td><?= $category['id'] ?></td>
 				<td><?= $category['category'] ?></td>
-				<td><button class="edit-cat-btn">Edit</button></td>
+				<td>
+					<button class="edit-cat-btn">Edit</button>
+					<button class="del-cat-btn">Delete</button>
+				</td>
 			</tr>
 		<?php endforeach ?>
 	</tbody>
@@ -104,3 +111,41 @@
 	<input type="text" id="category" name="category" />
 	<button type="submit">Add Category</button>
 </form>
+<hr/>
+<h4>Theses</h4>
+<table border=1>
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Title</th>
+			<th>Researchers</th>
+			<th>Abstract</th>
+			<th>Scope and Limitation</th>
+			<th>Academic Year</th>
+			<th>Category Id</th>
+			<th>Category</th>
+			<th>PDF Path</th>
+			<th>System Path</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php if ($theses != NULL) : ?>
+			<?php foreach($theses as $thesis) : ?>
+				<tr>
+					<td><?=$thesis['id']?></td>
+					<td><?=$thesis['title']?></td>
+					<td>
+						<?=$thesis['researchers']?>
+					</td>
+					<td><?=$thesis['abstract']?></td>
+					<td><?=$thesis['scope']?></td>
+					<td><?=$thesis['year']?></td>
+					<td><?=$thesis['category']['id']?></td>
+					<td><?=$thesis['category']['category']?></td>
+					<td><?=$thesis['pdf_path']?></td>
+					<td><?=$thesis['system_path']?></td>
+				</tr>
+			<?php endforeach ?>
+		<?php endif ?>
+	</tbody>
+</table>

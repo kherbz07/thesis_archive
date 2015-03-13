@@ -63,14 +63,13 @@ class Model_thesis extends PDOConnector{
 		for: getting all the thesis arranged by year
 		return: the list of thesis in the database
 	*/
-	public function getAllThesis($order_by = "year"){
+	public function getAllThesis(){
 		$result = null;
 		$counter = 0;
-		$this-connect();
+		$this->connect();
 		try{
-			$sql = "SELECT * FROM tbl_thesis ORDER BY ?";
+			$sql = "SELECT * FROM tbl_thesis";
 			$stmt = $this->dbh->prepare($sql);
-			$stmt->bindParam(1, $order_by);
 			$stmt->execute();
 
 			while($rs = $stmt->fetch()){
@@ -87,7 +86,7 @@ class Model_thesis extends PDOConnector{
 
 			}
 		}catch(PDOExcetion $e){
-			print_r($e);;
+			print_r($e);
 		}
 		$this->close();
 
@@ -149,14 +148,14 @@ class Model_thesis extends PDOConnector{
 
 	//----functions for category
 	function getCategory($id){
-		$sql = "SELECT category FROM tbl_category WHERE id = ?";
+		$sql = "SELECT * FROM tbl_category WHERE id = ?";
 		$stmt = $this->dbh->prepare($sql);
 		$stmt->bindParam(1, $id);
 		$stmt->execute();
 
 		$result = $stmt->fetch();
 
-		return $result['category'];
+		return $result;
 	}
 	function getAllCategories(){
 		$this->connect();

@@ -50,9 +50,9 @@ class Admin
 		{
 			$this->addUser();
 		}
-		else if ($action == 'deleteuser')
+		else if ($action == 'edituser')
 		{
-			$this->logout();
+			$this->editUser();
 		}
 		else if ($action == 'addcategory')
 		{
@@ -65,6 +65,9 @@ class Admin
 		$users = $this->user_model->getAllUsers();
 		$roles = $this->user_model->getAllRoles();
 		$categories = $this->thesis_model->getAllCategories();
+		$theses = $this->thesis_model->getAllThesis();
+		echo 'Theses: ';
+		print_r($theses);
 		include '../view/template/header.php';
 		include '../view/admin/index.php';
 		include '../view/template/footer.php';
@@ -100,6 +103,7 @@ class Admin
 	{
 		if (isset($_POST['firstname']) && isset($_POST['middlename']) && isset($_POST['lastname']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role']))
 		{
+			$user_id = $_POST['user_id'];
 			$firstname = addslashes($_POST['firstname']);
 			$middlename = addslashes($_POST['middlename']);
 			$lastname = addslashes($_POST['lastname']);
@@ -109,13 +113,14 @@ class Admin
 
 			if ($firstname != '' && $middlename != '' && $lastname != '' && $username != '' && $password != '')
 			{
-				$user = array('first_name' => $firstname,
+				$user = array('id' => $user_id,
+						'first_name' => $firstname,
 						'middle_name' => $middlename,
 						'last_name' => $lastname,
 						'username' => $username,
 						'password' => $password,
 						'role_id' => $role_id);
-				$this->user_model->addUser($user);
+				$this->user_model->editUser($user);
 			}
 		}
 		header('location: admin.php');
