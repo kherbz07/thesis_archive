@@ -83,7 +83,7 @@ class Model_users extends PDOConnector{
 			$stmt->bindParam(3, $data['role_id']);
 			$stmt->bindParam(4, $this->addUserInfo($data['first_name'], $data['middle_name'], $data['last_name']));	
 			$stmt->execute();
-			$user_id = $stmt->lastInsertId();
+			$user_id = $this->dbh->lastInsertId();
 		}catch(PDOException $e){
 			print_r($e);
 		}
@@ -177,10 +177,10 @@ class Model_users extends PDOConnector{
 		$stmt = $this->dbh->prepare($sql);
 		$stmt->bindParam(1, $firstname);
 		$stmt->bindParam(2, $middlename);
-		$stmt->bindParam(4, $lastname);
+		$stmt->bindParam(3, $lastname);
 		$stmt->execute();
 
-		return $stmt->lastInsertId();
+		return $this->dbh->lastInsertId();
 	}
 	public function editUserInfo($firstname, $middlename, $lastname, $id){
 		$sql = "INSERT INTO tbl_user_info(first_name, middle_name, last_name) VALUES(?,?,?) WHERE id = ?";
