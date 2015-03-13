@@ -76,7 +76,7 @@ class Model_users extends PDOConnector{
 			$stmt = $this->dbh->prepare($sql);
 			$stmt->bindParam(1, $data['username']);
 			$stmt->bindParam(2, $data['password']);
-			$stmt->bindParam(3, $data['role_id'];
+			$stmt->bindParam(3, $data['role_id']);
 			$stmt->bindParam(4, $this->addUserInfo($data['first_name'], $data['middle_name'], $data['last_name']));	
 			$stmt->execute();
 			$user_id = $stmt->lastInsertId();
@@ -114,7 +114,9 @@ class Model_users extends PDOConnector{
 		
 	}
 	public function addUserInfo($firstname, $middlename, $lastname){
-
+		$sql = "INSERT INTO tbl_user_info(first_name, middle_name, last_name) VALUES(?,?,?)";
+		$stmt = $this->dbh->prepare($sql);
+		$stmt->bindParam(1, $firstname);
 	}
 
 
