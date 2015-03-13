@@ -54,9 +54,9 @@ class Model_users extends PDOConnector{
 				$result[$counter]['username'] = $rs['username'];
 				$result[$counter]['password'] = $rs['password'];
 				$result[$counter]['role'] = $this->getRole($rs['id']);
-				$result[$counter]['first_name'] = getUserInfo($rs['id'], 'first_name');
-				$result[$counter]['middle_name'] = getUserInfo($rs['id'], 'middle_name');
-				$result[$counter]['last_name'] = getUserInfo($rs['id'], 'last_name') ;
+				$result[$counter]['first_name'] = $this->getUserInfo($rs['id'], 'first_name');
+				$result[$counter]['middle_name'] = $this->getUserInfo($rs['id'], 'middle_name');
+				$result[$counter]['last_name'] = $this->getUserInfo($rs['id'], 'last_name') ;
 
 				$counter++;
 			}
@@ -68,9 +68,28 @@ class Model_users extends PDOConnector{
 		return $result;
 	}
 
+	public function addUser($data){
+		$user_id = null;
+		$this->connect();
+		try{
+			$sql = "INSERT INTO tbl_users(username, password, role_id, user_info_id) VALUES(?, ?, ?, ?)";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $data['username']);
+			$stmt->bindParam(2, $data['password']);
+			$stmt->bindParam(3, $data['role_id'];
+			$stmt->bindParam(4, $this->addUserInfo($data['first_name'], $data['middle_name'], $data['last_name']));	
+			$stmt->execute();
+			$user_id = $stmt->lastInsertId();
+		}catch(PDOException $e){
+			print_r($e);
+		}
+		$this->close();
+		return $user_id;
+	}
+
 	//--------------------other functions for user-------------------------//
 
-	//function for getting a single role
+	//functions for tbl_roles
 	public function getRole($id){
 		$sql = "SELECT role FROM tbl_roles WHERE id = ?";
 		$stmt = $this->dbh->prepare($sql);
@@ -81,7 +100,8 @@ class Model_users extends PDOConnector{
 
 		return $result['role'];
 	}
-	//function for getting a single user information
+
+	//functions for tbl_user_info
 	public function getUserInfo($id, $column){
 		$sql = "SELECT ".$column." FROM tbl_user_info WHERE id = ?";
 		$stmt = $this->dbh->prepare($sql);
@@ -92,6 +112,9 @@ class Model_users extends PDOConnector{
 
 		return $result[0];
 		
+	}
+	public function addUserInfo($firstname, $middlename, $lastname){
+
 	}
 
 
