@@ -31,7 +31,39 @@ class Model_thesis extends PDOConnector{
 		return $thesis_id;
 	}
 
+	public function getAllThesis($order_by = "year"){
+		$result = null;
+		$counter = 0;
+		$this-connect();
+		try{
+			$sql = "SELECT * FROM tbl_thesis ORDER BY ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $order_by);
+			$stmt->execute();
+
+			while($rs = $stmt->fetch()){
+				$result[$counter]['id'] = $rs['id'];
+				$result[$counter]['title'] = $rs['title'];
+				$result[$counter]['abstract'] = $rs['abstract'];
+				$result[$counter]['scope'] = $rs['scope'];
+				$result[$counter]['year'] = $rs['year'];
+				$result[$counter]['category'] = $this->getCategory($rs['id']);
+				$result[$counter]['pdf_path'] = $rs['pdf_path'];
+				$result[$counter]['system_path'] = $rs['system_path'];
+				$result[$counter]['researchers'] = $this->getResearchers($rs['id']);
+				$counter++;
+
+			}
+		}catch(PDOExcetion $e){
+			print_r($e);;
+		}
+		$this->close();
+
+		return $result;
+	}
+
 	//------------- other thesis related functions-------------------//
+	//---functions for tbl_researchers
 	function addResearchers($data, $thesis_id){
 		$sql = "INSERT INTO tbl_researchers(thesis_id, first_name, middle_name, last_name, course_id, year_id) VALUES(?, ?, ?, ?, ?, ?)";
 		$stmt = $this->prepare($sql);
@@ -45,5 +77,42 @@ class Model_thesis extends PDOConnector{
 
 		return $stmt->lastInsertId();
 	}
+	function getResearchers($id){
+		$results = null;
+		$sql = "SELECT * FROM tbl_researchers WHERE id = ?";
+		$stmt = $this->dbh->prepare($sql);
+		$stmt->bindParam(1, $id);
+		$stmt->execute();
+
+		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		return $results;
+	}
+
+	//----functions for category
+	function getCategory($id){
+		$sql = "SELECT category FROM tbl_category WHERE id = ?";
+		$stmt = $this->dbh->prepare($sql);
+		$stmt->bindParam(1, $id);
+		$stmt->execute();
+
+		$result = $stmt->fetch();
+
+		return $result['category'];
+	} 
+	function addCategory($category){
+		$category_id = null;
+		$this->connect()
+		try{
+			$sql = "INSERT INTO tbl_category(category) VALUES(?)";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $category);
+			$stmt->execute();
+			$category_id = $stmt->lastInsertId();
+		}
+		$this->close()
+		return $category_id;
+	}
+
 
 }
