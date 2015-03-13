@@ -22,7 +22,7 @@ class Model_thesis extends PDOConnector{
 			$stmt->bindParam(7, $data['system_path']);
 			$stmt->execute();
 
-			$thesis_id = $stmt->lastInsertId();
+			$thesis_id = $this->dbh->lastInsertId();
 		}catch(PDOException $e){
 			print_r($e);
 

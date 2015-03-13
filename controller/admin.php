@@ -58,6 +58,10 @@ class Admin
 		{
 			$this->addCategory();
 		}
+		else if ($action == 'addthesis')
+		{
+			$this->addThesis();
+		}
 	}
 
 	public function index()
@@ -135,6 +139,37 @@ class Admin
 			{
 				$this->thesis_model->addCategory($category);
 			}
+		}
+		header('location: admin.php');
+		die();
+	}
+
+	public function addThesis()
+	{
+		if (isset($_POST['title']) && isset($_POST['abstract']) && isset($_POST['scope']) && isset($_POST['year']) && isset($_POST['category']))
+		{
+			$title = addslashes($_POST['title']);
+			$abstract = addslashes($_POST['abstract']);
+			$scope = addslashes($_POST['scope']);
+			$year = addslashes($_POST['year']);
+			$category_id = $_POST['category'];
+			$pdf_file = $_FILES['pdf_file'];
+			$sys_file = $_FILES['sys_file'];
+			$researchers = $_POST['researchers'];
+			$pdf_src = '../files/documents/' . $pdf_file['name'];
+			$sys_src = '../files/programs/' . $sys_file['name'];
+
+			$thesis = array('title' => $title,
+							'abstract' => $abstract,
+							'scope' => $scope,
+							'year' => $year,
+							'category_id' => $category_id,
+							'pdf_path' => $pdf_src,
+							'system_path' => $sys_src);
+			$thesis_id = $this->thesis_model->addThesis($thesis);
+			
+			move_uploaded_file($pdf_file['tmp_name'], $pdf_src);
+			move_uploaded_file($sys_file['tmp_name'], $sys_src);
 		}
 		header('location: admin.php');
 		die();
