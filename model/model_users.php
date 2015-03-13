@@ -25,7 +25,7 @@ class Model_users extends PDOConnector{
 				$result['role'] = $this->getRole($rs['role_id']);
 				$result['first_name'] = $this->getUserInfo($rs['id'], 'first_name');
 				$result['middle_name'] = $this->getUserInfo($rs['id'], 'middle_name');
-				$result['last_name'] = $this->getUserInfo($rs['id'], 'last_name') ;
+				$result['last_name'] = $this->getUserInfo($rs['id'], 'last_name');
 			}
 		}catch(PDOException $e){
 			print_r($e);

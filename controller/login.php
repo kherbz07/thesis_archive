@@ -45,13 +45,12 @@ class Login
 
 			$user_model = new Model_users();
 			$user = $user_model->getUserWhere($username, $password);
-
+			print_r($user);
 			if ($user != NULL)
 			{
-				session_start();
-				$_SESSION['user_id'] = $user['user_id'];
+				$_SESSION['user_id'] = $user['id'];
 				$_SESSION['username'] = $user['username'];
-				$_SESSION['role'] = $user['role'];
+				$_SESSION['role'] = $user['role']['role'];
 
 				if ($user['role'] == 'Administrator')
 				{
@@ -65,7 +64,8 @@ class Login
 				}
 			}
 		}
-		$this->index();
+		header('location: ./');
+		die();
 	}
 
 	public function logout()

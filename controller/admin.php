@@ -57,7 +57,7 @@ class Admin
 	{
 		$users = $this->user_model->getAllUsers();
 		$roles = $this->user_model->getAllRoles();
-		//$categories = $this->user_model->getAllCategories();
+		$categories = $this->user_model->getAllCategories();
 		include '../view/template/header.php';
 		include '../view/admin/index.php';
 		include '../view/template/footer.php';
