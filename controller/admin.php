@@ -56,6 +56,8 @@ class Admin
 	public function index()
 	{
 		$users = $this->user_model->getAllUsers();
+		//$roles = $this->user_model->getAllRoles();
+		//$categories = $this->user_model->getAllCategories();
 		include '../view/template/header.php';
 		include '../view/admin/index.php';
 		include '../view/template/footer.php';
@@ -63,6 +65,53 @@ class Admin
 
 	public function addUser()
 	{
-		
+		if (isset($_POST['firstname']) && isset($_POST['middlename']) && isset($_POST['lastname']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role']))
+		{
+			$firstname = addslashes($_POST['firstname']);
+			$middlename = addslashes($_POST['middlename']);
+			$lastname = addslashes($_POST['lastname']);
+			$username = addslashes($_POST['username']);
+			$password = addslashes($_POST['password']);
+			$role_id = addslashes($_POST['role']);
+
+			if ($firstname != '' && $middlename != '' && $lastname != '' && $username != '' && $password != '')
+			{
+				$user = array('first_name' => $firstname,
+						'middle_name' => $middlename,
+						'last_name' => $lastname,
+						'username' => $username,
+						'password' => $password,
+						'role_id' => $role_id);
+				$this->user_model->addUser($user);
+			}
+		}
+		header('location: admin.php');
+		die();
+	}
+
+	public function editUser()
+	{
+		if (isset($_POST['firstname']) && isset($_POST['middlename']) && isset($_POST['lastname']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role']))
+		{
+			$firstname = addslashes($_POST['firstname']);
+			$middlename = addslashes($_POST['middlename']);
+			$lastname = addslashes($_POST['lastname']);
+			$username = addslashes($_POST['username']);
+			$password = addslashes($_POST['password']);
+			$role_id = addslashes($_POST['role']);
+
+			if ($firstname != '' && $middlename != '' && $lastname != '' && $username != '' && $password != '')
+			{
+				$user = array('first_name' => $firstname,
+						'middle_name' => $middlename,
+						'last_name' => $lastname,
+						'username' => $username,
+						'password' => $password,
+						'role_id' => $role_id);
+				$this->user_model->addUser($user);
+			}
+		}
+		header('location: admin.php');
+		die();
 	}
 }
