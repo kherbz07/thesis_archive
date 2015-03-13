@@ -97,8 +97,9 @@ class Model_thesis extends PDOConnector{
 	//------------- other thesis related functions-------------------//
 	//---functions for tbl_researchers
 	function addResearchers($data, $thesis_id){
+		$this->connect();
 		$sql = "INSERT INTO tbl_researchers(thesis_id, first_name, middle_name, last_name, course_id, year_id) VALUES(?, ?, ?, ?, ?, ?)";
-		$stmt = $this->prepare($sql);
+		$stmt = $this->dbh->prepare($sql);
 		$stmt->bindParam(1, $thesis_id);
 		$stmt->bindParam(2, $data['first_name']);
 		$stmt->bindParam(3, $data['middle_name']);
@@ -106,10 +107,10 @@ class Model_thesis extends PDOConnector{
 		$stmt->bindParam(5, $data['course_id']);
 		$stmt->bindParam(6, $data['year_id']);
 		$stmt->execute();
-
-		return $stmt->lastInsertId();
+		return $this->dbh->lastInsertId();
 	}
 	function getResearchers($id){
+		$this->connect();
 		$results = null;
 		$counter = 0;
 		$sql = "SELECT * FROM tbl_researchers WHERE thesis_id = ?";
@@ -127,6 +128,7 @@ class Model_thesis extends PDOConnector{
 			$counter++;
 		}
 
+		$this->close();
 		return $results;
 	}
 	function editResearchers($data, $thesis_id){
@@ -148,6 +150,7 @@ class Model_thesis extends PDOConnector{
 
 	//----functions for category
 	function getCategory($id){
+		$this->connect();
 		$sql = "SELECT * FROM tbl_category WHERE id = ?";
 		$stmt = $this->dbh->prepare($sql);
 		$stmt->bindParam(1, $id);
@@ -155,6 +158,7 @@ class Model_thesis extends PDOConnector{
 
 		$result = $stmt->fetch();
 
+		$this->close();
 		return $result;
 	}
 	function getAllCategories(){
@@ -322,7 +326,7 @@ class Model_thesis extends PDOConnector{
 		}
 
 		$this->close();
-		return $result[0]['year'];
+		return $result;
 	}
 	public function addYear($year){
 		$id = null;

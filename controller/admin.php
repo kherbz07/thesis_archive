@@ -62,18 +62,41 @@ class Admin
 		{
 			$this->addThesis();
 		}
+		else if ($action == 'category')
+		{
+			$this->category();
+		}
+		else if ($action == 'user')
+		{
+			$this->user();
+		}
 	}
 
 	public function index()
 	{
-		$users = $this->user_model->getAllUsers();
-		$roles = $this->user_model->getAllRoles();
 		$categories = $this->thesis_model->getAllCategories();
 		$theses = $this->thesis_model->getAllThesis();
 		$courses = $this->thesis_model->getAllCourses();
 		$years = $this->thesis_model->getAllYears();
 		include '../view/template/header.php';
 		include '../view/admin/index.php';
+		include '../view/template/footer.php';
+	}
+
+	public function category()
+	{
+		$categories = $this->thesis_model->getAllCategories();
+		include '../view/template/header.php';
+		include '../view/admin/category.php';
+		include '../view/template/footer.php';
+	}
+
+	public function user()
+	{
+		$users = $this->user_model->getAllUsers();
+		$roles = $this->user_model->getAllRoles();
+		include '../view/template/header.php';
+		include '../view/admin/users.php';
 		include '../view/template/footer.php';
 	}
 
@@ -99,11 +122,11 @@ class Admin
 				$this->user_model->addUser($user);
 			}
 		}
-		header('location: admin.php');
+		header('location: admin.php?action=user');
 		die();
 	}
 
-	public function editUser()
+	/*public function editUser()
 	{
 		if (isset($_POST['firstname']) && isset($_POST['middlename']) && isset($_POST['lastname']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role']))
 		{
@@ -129,7 +152,7 @@ class Admin
 		}
 		header('location: admin.php');
 		die();
-	}
+	}*/
 
 	public function addCategory()
 	{
@@ -142,7 +165,7 @@ class Admin
 				$this->thesis_model->addCategory($category);
 			}
 		}
-		header('location: admin.php');
+		header('location: admin.php?action=category');
 		die();
 	}
 
@@ -157,7 +180,6 @@ class Admin
 			$category_id = $_POST['category'];
 			$pdf_file = $_FILES['pdf_file'];
 			$sys_file = $_FILES['sys_file'];
-			$researchers = $_POST['researchers'];
 			$pdf_src = '../files/documents/' . $pdf_file['name'];
 			$sys_src = '../files/programs/' . $sys_file['name'];
 			$res_fn = $_POST['res_fn'];
@@ -185,7 +207,8 @@ class Admin
 									'last_name' => $res_ln[$i],
 									'course_id' => $res_course[$i],
 									'year_id' => $res_year[$i]);
-				$this->thesis_model->addResearchers($researcher, $thesis_id);
+				print_r($researcher);
+				//$this->thesis_model->addResearchers($researcher, $thesis_id);
 			}
 		}
 		header('location: admin.php');

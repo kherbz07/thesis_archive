@@ -7,3 +7,8 @@
 </head>
 <body>
 <h1>Header File</h1>
+<a href="./">Thesis Records</a>
+<a href="admin.php?action=category">Categories</a>
+<a href="admin.php?action=user">Users</a>
+<hr/>
+<br/>
