@@ -79,7 +79,7 @@ class Admin
 			$middlename = addslashes($_POST['middlename']);
 			$lastname = addslashes($_POST['lastname']);
 			$username = addslashes($_POST['username']);
-			$password = addslashes($_POST['password']);
+			$password = md5(addslashes($_POST['password']));
 			$role_id = addslashes($_POST['role']);
 
 			if ($firstname != '' && $middlename != '' && $lastname != '' && $username != '' && $password != '')

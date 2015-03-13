@@ -49,6 +49,10 @@ class Teacher
 		{
 			$this->login();
 		}
+		else if($action == 'edit')
+		{
+			$this->edit();
+		}
 		else if ($action == 'logout')
 		{
 			$this->logout();
@@ -61,5 +65,12 @@ class Teacher
 		include '../view/template/header.php';
 		include '../view/teacher/index.php';
 		include '../view/template/footer.php';
+	}
+
+	public function edit()
+	{
+		$id = $_GET['id'];
+		
+
 	}
 }
