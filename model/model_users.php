@@ -134,6 +134,21 @@ class Model_users extends PDOConnector{
 	//--------------------other functions for user-------------------------//
 
 	//functions for tbl_roles
+	public function getAllRoles(){
+		$result = null;
+		$this->connect();
+		try{
+			$sql = "SELECT * FROM tbl_roles";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->execute();
+
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		catch(PDOException $e){
+			print_r($e);
+		}
+		$this->close();
+		return $result;
+	}
 	public function getRole($id){
 		$sql = "SELECT role FROM tbl_roles WHERE id = ?";
 		$stmt = $this->dbh->prepare($sql);
