@@ -34,6 +34,42 @@ class Model_users extends PDOConnector{
 
 		return $result;
 	}
+
+	/**
+		function getAllUsers()
+		for: getting the list of all users stored in the database
+		return: return multiple users(multi array)
+	*/
+	function getAllUsers(){
+		$result = null;
+		$counter = 0;
+		$this->connect();
+		try{
+			$sql = "SELECT * FROM tbl_users";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->execute();
+
+			while($rs = $stmt->fetch()){
+				$result[$counter]['id'] = $rs['id'];
+				$result[$counter]['username'] = $rs['username'];
+				$result[$counter]['password'] = $rs['password'];
+				$result[$counter]['role'] = $this->getRole($rs['id']);
+				$result[$counter]['first_name'] = getUserInfo($rs['id'], 'first_name');
+				$result[$counter]['middle_name'] = getUserInfo($rs['id'], 'middle_name');
+				$result[$counter]['last_name'] = getUserInfo($rs['id'], 'last_name') ;
+
+				$counter++;
+			}
+		}catch(PDOException $e){
+			print_r($e);
+		}
+		$this->close();
+
+		return $result;
+	}
+
+	//--------------------other functions for user-------------------------//
+
 	//function for getting a single role
 	public function getRole($id){
 		$sql = "SELECT role FROM tbl_roles WHERE id = ?";
@@ -57,6 +93,8 @@ class Model_users extends PDOConnector{
 		return $result[0];
 		
 	}
+
+
 
 
 }
