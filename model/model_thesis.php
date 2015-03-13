@@ -30,7 +30,11 @@ class Model_thesis extends PDOConnector{
 		$this->close();
 		return $thesis_id;
 	}
-
+	/**
+		function getAllThesis($order_by = "year") <--- default value of order by is year
+		for: getting all the thesis arranged by year
+		return: the list of thesis in the database
+	*/
 	public function getAllThesis($order_by = "year"){
 		$result = null;
 		$counter = 0;
@@ -116,7 +120,7 @@ class Model_thesis extends PDOConnector{
 	function editCategory($category, $id){
 		$this->connect()
 		try{
-			$sql = "UPDATE tbl_category(category) VALUES(?) WHERE id = ?";
+			$sql = "UPDATE tbl_category SET category = ? WHERE id = ?";
 			$stmt = $this->dbh->prepare($sql);
 			$stmt->bindParam(1, $category);
 			$stmt->bindParam(2, $id);

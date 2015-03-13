@@ -183,7 +183,7 @@ class Model_users extends PDOConnector{
 		return $this->dbh->lastInsertId();
 	}
 	public function editUserInfo($firstname, $middlename, $lastname, $id){
-		$sql = "INSERT INTO tbl_user_info(first_name, middle_name, last_name) VALUES(?,?,?) WHERE id = ?";
+		$sql = "INSERT INTO tbl_user_info SET first_name = ?, middle_name = ?, last_name = ? WHERE id = ?";
 		$stmt = $this->dbh->prepare($sql);
 		$stmt->bindParam(1, $firstname);
 		$stmt->bindParam(2, $middlename);
