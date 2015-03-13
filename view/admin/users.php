@@ -1,6 +1,3 @@
-<h3>Admin Home Page</h3>
-<a href="login.php?action=logout">Logout</a>
-<hr/>
 <table border=1>
 	<thead>
 		<tr>

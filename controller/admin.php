@@ -79,6 +79,7 @@ class Admin
 		$courses = $this->thesis_model->getAllCourses();
 		$years = $this->thesis_model->getAllYears();
 		include '../view/template/header.php';
+		include '../view/template/header2.php';
 		include '../view/admin/index.php';
 		include '../view/template/footer.php';
 	}
@@ -87,6 +88,7 @@ class Admin
 	{
 		$categories = $this->thesis_model->getAllCategories();
 		include '../view/template/header.php';
+		include '../view/template/header2.php';
 		include '../view/admin/category.php';
 		include '../view/template/footer.php';
 	}
@@ -96,6 +98,7 @@ class Admin
 		$users = $this->user_model->getAllUsers();
 		$roles = $this->user_model->getAllRoles();
 		include '../view/template/header.php';
+		include '../view/template/header2.php';
 		include '../view/admin/users.php';
 		include '../view/template/footer.php';
 	}

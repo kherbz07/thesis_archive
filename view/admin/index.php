@@ -1,54 +1,54 @@
-<h3>Admin Home Page</h3>
-<a href="login.php?action=logout">Logout</a>
-<hr/>
-<h4>Theses</h4>
-<table border=1>
-	<thead>
-		<tr>
-			<th>Title</th>
-			<th>Abstract</th>
-			<th>Scope and Limitations</th>
-			<th>Academic Year</th>
-			<th>Category</th>
-			<th>PDF Path</th>
-			<th>System Path</th>
-			<th>Researchers</th>
-			<th colspan="2">Action</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php if($theses != null): ?>
-			<?php foreach($theses as $index => $thesis): ?>
+<div class="wrapper-container">
+	<div class="tbl-div-container">
+		<h3 class="tacenter">Thesis Record</h3>
+		<table border="1" id="thesis-tbl" class="table-container">
+			<thead>
 				<tr>
-					<td><?php echo $thesis['title']; ?></td>
-					<td><?php echo $thesis['abstract']; ?></td>
-					<td><?php echo $thesis['scope']; ?></td>
-					<td><?php echo $thesis['year']; ?></td>
-					<td><?php echo $thesis['category']['category']; ?></td>
-					<td><?php echo $thesis['pdf_path']; ?></td>
-					<td><?php echo $thesis['system_path']; ?></td>
-					<td>
-						<ul>
-						<?php foreach($thesis['researchers'] as $researcher):  ?>
-							<li>
-								<?php echo $researcher['first_name'].' '.$researcher['middle_name'].' '.$researcher['last_name'].' '.$researcher['course'].' '.$researcher['year']['year']; ?>
-							</li>
-						<?php endforeach; ?>
-						</ul>
-					</td>
-					<td>
-						<button>Edit</button>
-					</td>
-					<td>
-						
-						<button>Delete</button>
-					</td>
+					<th>Title</th>
+					<th>Abstract</th>
+					<th>Scope and Limitations</th>
+					<th>Academic Year</th>
+					<th>Category</th>
+					<th>PDF Path</th>
+					<th>System Path</th>
+					<th>Researchers</th>
+					<th colspan="2">Action</th>
 				</tr>
-			<?php endforeach; ?>
-		<?php endif; ?>
-	</tbody>
-</table>
-<hr/>
+			</thead>
+			<tbody>
+				<?php if($theses != null): ?>
+					<?php foreach($theses as $index => $thesis): ?>
+						<tr>
+							<td><?php echo $thesis['title']; ?></td>
+							<td><?php echo $thesis['abstract']; ?></td>
+							<td><?php echo $thesis['scope']; ?></td>
+							<td><?php echo $thesis['year']; ?></td>
+							<td><?php echo $thesis['category']['category']; ?></td>
+							<td><?php echo $thesis['pdf_path']; ?></td>
+							<td><?php echo $thesis['system_path']; ?></td>
+							<td>
+								<ul>
+								<?php foreach($thesis['researchers'] as $researcher):  ?>
+									<li>
+										<?php echo $researcher['first_name'].' '.$researcher['middle_name'].' '.$researcher['last_name'].' '.$researcher['course'].' '.$researcher['year']['year']; ?>
+									</li>
+								<?php endforeach; ?>
+								</ul>
+							</td>
+							<td>
+								<button class="form-button vote-btn">Edit</button>
+							</td>
+							<td>
+								
+								<button class="form-button vote-btn">Delete</button>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</tbody>
+		</table>
+	</div>
+</div>
 <form action="admin.php" method="POST" enctype="multipart/form-data">
 	<input type="hidden" name="action" value="addthesis" />
 	<label>Thesis Title:</label>
