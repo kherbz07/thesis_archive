@@ -111,12 +111,21 @@ class Model_thesis extends PDOConnector{
 	}
 	function getResearchers($id){
 		$results = null;
-		$sql = "SELECT * FROM tbl_researchers WHERE id = ?";
+		$counter = 0;
+		$sql = "SELECT * FROM tbl_researchers WHERE thesis_id = ?";
 		$stmt = $this->dbh->prepare($sql);
 		$stmt->bindParam(1, $id);
 		$stmt->execute();
 
-		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		while($rs = $stmt->fetch()){
+			$results[$counter]['first_name'] = $rs['first_name'];
+			$results[$counter]['middle_name'] = $rs['middle_name'];
+			$results[$counter]['last_name'] = $rs['last_name'];
+			$results[$counter]['first_name'] = $rs['first_name'];
+			$results[$counter]['course'] = $this->getCourse($rs['id']);
+			$results[$counter]['first_name'] = $this->getYear($rs['id']);
+			$counter++;
+		}
 
 		return $results;
 	}
@@ -199,6 +208,169 @@ class Model_thesis extends PDOConnector{
 		}
 		$this->close();
 	}
+	//functions for tbl_course
+	public function getAllCourses(){
+		$result = null;
+		$this->connect();
+		try{
+			$sql = "SELECT * FROM tbl_course";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->execute();
 
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}catch(PDOException $e){
+			print_r($e);
+		}
+
+		$this->close();
+		return $result;
+	}
+	public function getCourse($id){
+		$result = null;
+		$this->connect();
+		try{
+			$sql = "SELECT * FROM tbl_course WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $id);
+			$stmt->execute();
+
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}catch(PDOException $e){
+			print_r($e);
+		}
+
+		$this->close();
+		return $result;
+	}
+	public function addCourse($course){
+		$id = null;
+		$this->connect();
+		try{
+			$sql = "INSERT INTO tbl_course(course) VALUES(?)";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $course);
+			$stmt->execute();
+
+			$id = $this->dbh->lastInsertId();
+		}catch(PDOException $e){
+			print_r($e);
+		}
+
+		$this->close();
+		return $id;
+	}
+	public function editCourse($course, $id){
+		$this->connect();
+		try{
+			$sql = "UPDATE tbl_course SET course = ? WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $course);
+			$stmt->bindParam(2, $id);
+			$stmt->execute();
+
+			
+		}catch(PDOException $e){
+			print_r($e);
+		}
+
+		$this->close();
+	}
+	public function deleteCourse($id){
+		$this->connect();
+		try{
+			$sql = "DELETE tbl_course WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $id);
+			$stmt->execute();
+
+			
+		}catch(PDOException $e){
+			print_r($e);
+		}
+
+		$this->close();
+	}
+	//-------functions for tbl_year
+	public function getAllYears(){
+		$result = null;
+		$this->connect();
+		try{
+			$sql = "SELECT * FROM tbl_year";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->execute();
+
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}catch(PDOException $e){
+			print_r($e);
+		}
+
+		$this->close();
+		return $result;
+	}
+	public function getYear($id){
+		$result = null;
+		$this->connect();
+		try{
+			$sql = "SELECT * FROM tbl_year WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $id);
+			$stmt->execute();
+
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}catch(PDOException $e){
+			print_r($e);
+		}
+
+		$this->close();
+		return $result;
+	}
+	public function addYear($year){
+		$id = null;
+		$this->connect();
+		try{
+			$sql = "INSERT INTO tbl_year(year) VALUES(?)";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $course);
+			$stmt->execute();
+
+			$id = $this->dbh->lastInsertId();
+		}catch(PDOException $e){
+			print_r($e);
+		}
+
+		$this->close();
+		return $id;
+	}
+	public function editYear($year, $id){
+		$this->connect();
+		try{
+			$sql = "UPDATE tbl_year SET year = ? WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $year);
+			$stmt->bindParam(2, $id);
+			$stmt->execute();
+
+			
+		}catch(PDOException $e){
+			print_r($e);
+		}
+
+		$this->close();
+	}
+	public function deleteYear($id){
+		$this->connect();
+		try{
+			$sql = "DELETE tbl_year WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $id);
+			$stmt->execute();
+
+			
+		}catch(PDOException $e){
+			print_r($e);
+		}
+
+		$this->close();
+	}
 
 }
