@@ -91,6 +91,29 @@ class Model_users extends PDOConnector{
 		return $user_id;
 	}
 	/**
+		function editUser($data, $id) <-- $data is an array
+		for: editing a user
+		return: void;
+	*/
+	public function editUser($data, $id){
+		$this->connect();
+		try{
+			$sql = "UPDATE tbl_users(username, password, role_id, user_info_id) VALUES(?, ?, ?) WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $data['username']);
+			$stmt->bindParam(2, $data['password']);
+			$stmt->bindParam(3, $data['role_id']);	
+			$stmt->bindParam(4, $id);
+			$stmt->execute();
+
+			$this->editUserInfo($data['first_name'], $data['middle_name'], $data['last_name']), $id)
+
+		}catch(PDOException $e){
+			print_r($e);
+		}
+		$this->close();
+	}
+	/**
 		function deleteUser($id)
 		for: deleting a user
 		return: void
@@ -143,6 +166,15 @@ class Model_users extends PDOConnector{
 		$stmt->execute();
 
 		return $stmt->lastInsertId();
+	}
+	public function editUserInfo($firstname, $middlename, $lastname, $id){
+		$sql = "INSERT INTO tbl_user_info(first_name, middle_name, last_name) VALUES(?,?,?) WHERE id = ?";
+		$stmt = $this->dbh->prepare($sql);
+		$stmt->bindParam(1, $firstname);
+		$stmt->bindParam(2, $middlename);
+		$stmt->bindParam(3, $lastname);
+		$stmt->bindParam(4, $id);
+		$stmt->execute();
 	}
 
 
