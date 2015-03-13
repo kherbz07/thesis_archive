@@ -92,6 +92,39 @@ class Model_thesis extends PDOConnector{
 
 		return $result;
 	}
+	/**
+		function getThesis(id)
+		for: get a single thesis data
+		return: a thesis data
+	*/
+	public function getThesis($id){
+		$result = null;
+		$this->connect();
+		try{
+			$sql = "SELECT * FROM tbl_thesis WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $id);
+			$stmt->execute();
+
+			while($rs = $stmt->fetch()){
+				$result['id'] = $rs['id'];
+				$result['title'] = $rs['title'];
+				$result['abstract'] = $rs['abstract'];
+				$result['scope'] = $rs['scope'];
+				$result['year'] = $rs['year'];
+				$result['category'] = $this->getCategory($rs['category_id']);
+				$result['pdf_path'] = $rs['pdf_path'];
+				$result['system_path'] = $rs['system_path'];
+				$result['researchers'] = $this->getResearchers($rs['id']);
+
+			}
+		}catch(PDOExcetion $e){
+			print_r($e);
+		}
+		$this->close();
+
+		return $result;
+	}
 
 
 	//------------- other thesis related functions-------------------//
