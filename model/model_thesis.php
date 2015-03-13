@@ -160,7 +160,7 @@ class Model_thesis extends PDOConnector{
 	}
 	function addCategory($category){
 		$category_id = null;
-		$this->connect()
+		$this->connect();
 		try{
 			$sql = "INSERT INTO tbl_category(category) VALUES(?)";
 			$stmt = $this->dbh->prepare($sql);
@@ -174,7 +174,7 @@ class Model_thesis extends PDOConnector{
 		return $category_id;
 	}
 	function editCategory($category, $id){
-		$this->connect()
+		$this->connect();
 		try{
 			$sql = "UPDATE tbl_category SET category = ? WHERE id = ?";
 			$stmt = $this->dbh->prepare($sql);
@@ -188,7 +188,7 @@ class Model_thesis extends PDOConnector{
 	
 	}
 	function deleteCategory($id){
-		$this->connect()
+		$this->connect();
 		try{
 			$sql = "DELETE FROM tbl_category WHERE id = ?";
 			$stmt = $this->dbh->prepare($sql);
