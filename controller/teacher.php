@@ -1,7 +1,7 @@
 <?php
-new Admin();
+new Teacher();
 
-class Admin
+class Teacher
 {
 	public function __construct()
 	{
@@ -33,7 +33,7 @@ class Admin
 	public function index()
 	{
 		include '../view/template/header.php';
-		include '../view/admin/index.php';
+		include '../view/teacher/index.php';
 		include '../view/template/footer.php';
 	}
 }
