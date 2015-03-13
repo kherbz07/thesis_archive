@@ -123,7 +123,7 @@ class Model_thesis extends PDOConnector{
 			$results[$counter]['last_name'] = $rs['last_name'];
 			$results[$counter]['first_name'] = $rs['first_name'];
 			$results[$counter]['course'] = $this->getCourse($rs['id']);
-			$results[$counter]['first_name'] = $this->getYear($rs['id']);
+			$results[$counter]['year'] = $this->getYear($rs['id']);
 			$counter++;
 		}
 
@@ -240,7 +240,7 @@ class Model_thesis extends PDOConnector{
 		}
 
 		$this->close();
-		return $result;
+		return $result[0]['course'];
 	}
 	public function addCourse($course){
 		$id = null;
@@ -322,7 +322,7 @@ class Model_thesis extends PDOConnector{
 		}
 
 		$this->close();
-		return $result;
+		return $result[0]['year'];
 	}
 	public function addYear($year){
 		$id = null;

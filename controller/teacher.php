@@ -1,18 +1,26 @@
 <?php
+require_once '../model/model_users.php';
+require_once '../model/model_thesis.php';
 new Teacher();
 
 class Teacher
 {
+	private $user_model;
+	private $thesis_model;
 	public function __construct()
 	{
 		session_start();
 		if (isset($_SESSION['role']))
 		{
-			if ($_SESSION['role'] == 'Teacher')
+			if ($_SESSION['role'] == 'Administrator')
 			{
-				header('location: teacher.php');
+				header('location: admin.php');
 				die();
 			}
+
+			$this->user_model = new Model_users();
+			$this->thesis_model = new Model_thesis();
+
 			if (isset($_POST['action']))
 			{
 				$action = $_POST['action'];
@@ -49,6 +57,7 @@ class Teacher
 
 	public function index()
 	{
+		$theses = $this->thesis_model->getAllThesis();
 		include '../view/template/header.php';
 		include '../view/teacher/index.php';
 		include '../view/template/footer.php';
