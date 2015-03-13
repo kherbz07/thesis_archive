@@ -1,3 +1,3 @@
 <?php
-header('location: controller/login.php');
+header('location: controller/');
 die();

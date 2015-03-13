@@ -1,19 +1,34 @@
 <?php
-new Login();
+require_once '../model/model_users.php';
+new Index();
 
-class Login
+class Index
 {
 	public function __construct()
 	{
 		session_start();
-		if (isset($_SESSION['user_id']))
+		if (isset($_SESSION['role']))
 		{
-			header('location: home.php');
-			die();
+			if ($_SESSION['role'] == 'Administrator')
+			{
+				header('location: admin.php');
+				die();
+			}
+			else if ($_SESSION['role'] == 'Teacher')
+			{
+				header('location: home.php');
+				die();
+			}
+			
 		}
 		if (isset($_POST['action']))
 		{
 			$action = $_POST['action'];
+			$this->callAction($action);
+		}
+		else if (isset($_GET['action']))
+		{
+			$action = $_GET['action'];
 			$this->callAction($action);
 		}
 		else
@@ -39,7 +54,7 @@ class Login
 
 	public function login()
 	{
-		if (isset($_POST['username']) && isset($_POST['password'])
+		if (isset($_POST['username']) && isset($_POST['password']))
 		{
 			$username = addslashes($_POST['username']);
 			$password = addslashes($_POST['password']);
@@ -52,10 +67,18 @@ class Login
 				session_start();
 				$_SESSION['user_id'] = $user['user_id'];
 				$_SESSION['username'] = $user['username'];
-				$_SESSION['role'] = $user['role']['role'];
+				$_SESSION['role'] = $user['role'];
 
-				header('location: home.php');
-				die();
+				if ($user['role'] == 'Administrator')
+				{
+					header('location: admin.php');
+					die();
+				}
+				else if ($user['role'] == 'Teacher')
+				{
+					header('location: home.php');
+					die();
+				}
 			}
 		}
 		header('location: login.php');
