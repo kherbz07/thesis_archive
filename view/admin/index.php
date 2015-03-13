@@ -122,39 +122,47 @@
 <table border=1>
 	<thead>
 		<tr>
-			<th>Id</th>
 			<th>Title</th>
-			<th>Researchers</th>
 			<th>Abstract</th>
-			<th>Scope and Limitation</th>
+			<th>Scope and Limitations</th>
 			<th>Academic Year</th>
-			<th>Category Id</th>
 			<th>Category</th>
 			<th>PDF Path</th>
 			<th>System Path</th>
+			<th>Researchers</th>
+			<th colspan="2">Action</th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if ($theses != NULL) : ?>
-			<?php foreach($theses as $thesis) : ?>
+		<?php if($theses != null): ?>
+			<?php foreach($theses as $index => $thesis): ?>
 				<tr>
-					<td><?=$thesis['id']?></td>
-					<td><?=$thesis['title']?></td>
+					<td><?php echo $thesis['title']; ?></td>
+					<td><?php echo $thesis['abstract']; ?></td>
+					<td><?php echo $thesis['scope']; ?></td>
+					<td><?php echo $thesis['year']; ?></td>
+					<td><?php echo $thesis['category']['category']; ?></td>
+					<td><?php echo $thesis['pdf_path']; ?></td>
+					<td><?php echo $thesis['system_path']; ?></td>
 					<td>
-						<?php foreach ($thesis['researchers'] as $researcher) : ?>
-							<?=$researcher['first_name'] . $researcher['middle_name'] . $researcher['last_name']?><br/>
-						<?php endforeach ?>
+						<ul>
+						<?php foreach($thesis['researchers'] as $researcher):  ?>
+							<li>
+								<?php echo $researcher['first_name'].' '.$researcher['middle_name'].' '.$researcher['last_name'].' '.$researcher['course'].' '.$researcher['year']; ?>
+							</li>
+						<?php endforeach; ?>
+						</ul>
 					</td>
-					<td><?=$thesis['abstract']?></td>
-					<td><?=$thesis['scope']?></td>
-					<td><?=$thesis['year']?></td>
-					<td><?=$thesis['category']['id']?></td>
-					<td><?=$thesis['category']['category']?></td>
-					<td><?=$thesis['pdf_path']?></td>
-					<td><?=$thesis['system_path']?></td>
+					<td>
+						<button>Edit</button>
+					</td>
+					<td>
+						
+						<button>Delete</button>
+					</td>
 				</tr>
-			<?php endforeach ?>
-		<?php endif ?>
+			<?php endforeach; ?>
+		<?php endif; ?>
 	</tbody>
 </table>
 <hr/>
@@ -177,10 +185,42 @@
 		</optgroup>
 	</select><br/>
 	<label>Researcher(s):</label>
-	<input type="text" name="researchers[]" />
-	<input type="text" name="researchers[]" />
-	<input type="text" name="researchers[]" />
-	<input type="text" name="researchers[]" /><br/>
+	<input type="text" name="res_fn[]" />
+	<input type="text" name="res_mn[]" />
+	<input type="text" name="res_ln[]" />
+	<select name="course[]">
+		<optgroup label="Select Course">
+			<?php foreach($courses as $course) : ?>
+				<option value="<?=$course['id']?>"><?=$course['course']?></option>
+			<?php endforeach ?>
+		</optgroup>
+	</select>
+	<select name="year[]">
+		<optgroup label="Select Year">
+			<?php foreach($years as $year) : ?>
+				<option value="<?=$years['id']?>"><?=$year['year']?></option>
+			<?php endforeach ?>
+		</optgroup>
+	</select>
+	<br/>
+	<input type="text" name="res_fn[]" />
+	<input type="text" name="res_mn[]" />
+	<input type="text" name="res_ln[]" />
+	<select name="res_course[]">
+		<optgroup label="Select Course">
+			<?php foreach($courses as $course) : ?>
+				<option value="<?=$course['id']?>"><?=$course['course']?></option>
+			<?php endforeach ?>
+		</optgroup>
+	</select>
+	<select name="res_year[]">
+		<optgroup label="Select Year">
+			<?php foreach($years as $year) : ?>
+				<option value="<?=$years['id']?>"><?=$year['year']?></option>
+			<?php endforeach ?>
+		</optgroup>
+	</select>
+	<br/>
 	<label>Thesis File (PDF Format):</label>
 	<input type="file" id="pdf_file" name="pdf_file" /><br/>
 	<label>System File:</label>

@@ -70,6 +70,8 @@ class Admin
 		$roles = $this->user_model->getAllRoles();
 		$categories = $this->thesis_model->getAllCategories();
 		$theses = $this->thesis_model->getAllThesis();
+		$courses = $this->thesis_model->getAllCourses();
+		$years = $this->thesis_model->getAllYears();
 		include '../view/template/header.php';
 		include '../view/admin/index.php';
 		include '../view/template/footer.php';
@@ -79,12 +81,12 @@ class Admin
 	{
 		if (isset($_POST['firstname']) && isset($_POST['middlename']) && isset($_POST['lastname']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role']))
 		{
-			$firstname = addslashes($_POST['firstname']);
-			$middlename = addslashes($_POST['middlename']);
-			$lastname = addslashes($_POST['lastname']);
-			$username = addslashes($_POST['username']);
-			$password = addslashes($_POST['password']);
-			$role_id = addslashes($_POST['role']);
+			$firstname = $_POST['firstname'];
+			$middlename = $_POST['middlename'];
+			$lastname = $_POST['lastname'];
+			$username = $_POST['username'];
+			$password = $_POST['password'];
+			$role_id = $_POST['role'];
 
 			if ($firstname != '' && $middlename != '' && $lastname != '' && $username != '' && $password != '')
 			{
@@ -106,12 +108,12 @@ class Admin
 		if (isset($_POST['firstname']) && isset($_POST['middlename']) && isset($_POST['lastname']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role']))
 		{
 			$user_id = $_POST['user_id'];
-			$firstname = addslashes($_POST['firstname']);
-			$middlename = addslashes($_POST['middlename']);
-			$lastname = addslashes($_POST['lastname']);
-			$username = addslashes($_POST['username']);
-			$password = addslashes($_POST['password']);
-			$role_id = addslashes($_POST['role']);
+			$firstname = $_POST['firstname'];
+			$middlename = $_POST['middlename'];
+			$lastname = $_POST['lastname'];
+			$username = $_POST['username'];
+			$password = $_POST['password'];
+			$role_id = $_POST['role'];
 
 			if ($firstname != '' && $middlename != '' && $lastname != '' && $username != '' && $password != '')
 			{
@@ -133,7 +135,7 @@ class Admin
 	{
 		if (isset($_POST['category']))
 		{
-			$category = addslashes($_POST['category']);
+			$category = $_POST['category'];
 
 			if ($category != '')
 			{
@@ -148,16 +150,21 @@ class Admin
 	{
 		if (isset($_POST['title']) && isset($_POST['abstract']) && isset($_POST['scope']) && isset($_POST['year']) && isset($_POST['category']))
 		{
-			$title = addslashes($_POST['title']);
-			$abstract = addslashes($_POST['abstract']);
-			$scope = addslashes($_POST['scope']);
-			$year = addslashes($_POST['year']);
+			$title = $_POST['title'];
+			$abstract = $_POST['abstract'];
+			$scope = $_POST['scope'];
+			$year = $_POST['year'];
 			$category_id = $_POST['category'];
 			$pdf_file = $_FILES['pdf_file'];
 			$sys_file = $_FILES['sys_file'];
 			$researchers = $_POST['researchers'];
 			$pdf_src = '../files/documents/' . $pdf_file['name'];
 			$sys_src = '../files/programs/' . $sys_file['name'];
+			$res_fn = $_POST['res_fn'];
+			$res_mn = $_POST['res_mn'];
+			$res_ln = $_POST['res_ln'];
+			$res_course = $_POST['res_course'];
+			$res_year = $_POST['res_year'];
 
 			$thesis = array('title' => $title,
 							'abstract' => $abstract,
@@ -170,6 +177,16 @@ class Admin
 			
 			move_uploaded_file($pdf_file['tmp_name'], $pdf_src);
 			move_uploaded_file($sys_file['tmp_name'], $sys_src);
+
+			for ($i = 0; $i < count($res_fn); $i++)
+			{
+				$researcher = array('first_name' => $res_fn[$i],
+									'middle_name' => $res_mn[$i],
+									'last_name' => $res_ln[$i],
+									'course_id' => $res_course[$i],
+									'year_id' => $res_year[$i]);
+				$this->thesis_model->addResearchers($researcher, $thesis_id);
+			}
 		}
 		header('location: admin.php');
 		die();
