@@ -81,7 +81,7 @@ class Model_thesis extends PDOConnector{
 				$result[$counter]['category'] = $this->getCategory($rs['category_id']);
 				$result[$counter]['pdf_path'] = $rs['pdf_path'];
 				$result[$counter]['system_path'] = $rs['system_path'];
-				$result[$counter]['researchers'] = $this->getResearchers($rs['thesis_id']);
+				$result[$counter]['researchers'] = $this->getResearchers($rs['id']);
 				$counter++;
 
 			}

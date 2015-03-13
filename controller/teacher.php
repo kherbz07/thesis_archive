@@ -70,7 +70,7 @@ class Teacher
 	public function edit()
 	{
 		$id = $_GET['id'];
-		
-
+		$thesis = $this->thesis_model->getThesis($id);
+		print_r($thesis);
 	}
 }
