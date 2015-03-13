@@ -70,7 +70,15 @@ class Teacher
 	public function edit()
 	{
 		$id = $_GET['id'];
+		$courses = $this->thesis_model->getAllCourses();
+		$categories = $this->thesis_model->getAllCategories();
+		$years = $this->thesis_model->getAllYears();
 		$thesis = $this->thesis_model->getThesis($id);
+
 		print_r($thesis);
+
+		include '../view/template/header.php';
+		include '../view/teacher/edit.php';
+		include '../view/template/footer.php';
 	}
 }

@@ -92,6 +92,11 @@ class Model_thesis extends PDOConnector{
 
 		return $result;
 	}
+	/**
+		function getThesis(id)
+		for: get a single thesis data
+		return: a thesis data
+	*/
 	public function getThesis($id){
 		$result = null;
 		$this->connect();
@@ -110,7 +115,7 @@ class Model_thesis extends PDOConnector{
 				$result['category'] = $this->getCategory($rs['category_id']);
 				$result['pdf_path'] = $rs['pdf_path'];
 				$result['system_path'] = $rs['system_path'];
-				$result['researchers'] = $this->getResearchers($rs['thesis_id']);
+				$result['researchers'] = $this->getResearchers($rs['id']);
 
 			}
 		}catch(PDOExcetion $e){
