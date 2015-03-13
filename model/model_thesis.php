@@ -31,6 +31,34 @@ class Model_thesis extends PDOConnector{
 		return $thesis_id;
 	}
 	/**
+		function editThesis($data, $id) <--- $data is an array
+		for: editing information for thesis
+		return: void
+	*/
+	public function editThesis($data, $id){
+		
+		$this->connect();
+		try{
+			$sql = "UPDATE tbl_thesis SET title = ?, abstract = ?, scope = ?, year = ?, category_id = ?, pdf_path = ?, system_path = ? WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $data['title']);
+			$stmt->bindParam(2, $data['abstract']);
+			$stmt->bindParam(3, $data['scope']);
+			$stmt->bindParam(4, $data['year']);
+			$stmt->bindParam(5, $data['category_id']);
+			$stmt->bindParam(6, $data['pdf_path']);
+			$stmt->bindParam(7, $data['system_path']);
+			$stmt->bindParam(8, $id);
+			$stmt->execute();
+
+		}catch(PDOException $e){
+			print_r($e);
+
+		}
+		$this->close();
+		
+	}
+	/**
 		function getAllThesis($order_by = "year") <--- default value of order by is year
 		for: getting all the thesis arranged by year
 		return: the list of thesis in the database
@@ -66,6 +94,7 @@ class Model_thesis extends PDOConnector{
 		return $result;
 	}
 
+
 	//------------- other thesis related functions-------------------//
 	//---functions for tbl_researchers
 	function addResearchers($data, $thesis_id){
@@ -92,6 +121,15 @@ class Model_thesis extends PDOConnector{
 
 		return $results;
 	}
+	function editResearchers($data, $thesis_id){
+
+	}
+	function deleteResearchers($thesis_id){
+		$sql = "DELETE FROM tbl_researchers WHERE thesis_id = ?";
+		$stmt = $this->dbh->prepare($sql);
+		$stmt->bindParam(1, $thesis_id);
+		$stmt->execute();
+	}
 
 	//----functions for category
 	function getCategory($id){
@@ -103,7 +141,16 @@ class Model_thesis extends PDOConnector{
 		$result = $stmt->fetch();
 
 		return $result['category'];
-	} 
+	}
+	function getAllCategories(){
+		$sql = "SELECT * FROM tbl_category";
+		$stmt = $this->dbh->prepare($sql);
+		$stmt->execute();
+
+		$result = $stmt->fetchALL(PDO::FETCH_ASSOC);
+
+		return $result;	
+	}
 	function addCategory($category){
 		$category_id = null;
 		$this->connect()
@@ -126,7 +173,7 @@ class Model_thesis extends PDOConnector{
 			$stmt->bindParam(2, $id);
 			$stmt->execute();
 		}
-		$this->close()
+		$this->close();
 	
 	}
 	function deleteCategory($id){
@@ -137,7 +184,7 @@ class Model_thesis extends PDOConnector{
 			$stmt->bindParam(1, $id);
 			$stmt->execute();
 		}
-		$this->close()
+		$this->close();
 	}
 
 
