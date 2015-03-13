@@ -78,11 +78,12 @@
 	<button type="submit">Edit User</button>
 </form>
 <hr/>
-<!--<table border=1>
+<table border=1>
 	<thead>
 		<tr>
 			<th>Id</th>
 			<th>Category</th>
+			<th>Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -90,7 +91,16 @@
 			<tr>
 				<td><?= $category['id'] ?></td>
 				<td><?= $category['category'] ?></td>
+				<td><button class="edit-cat-btn">Edit</button></td>
 			</tr>
 		<?php //endforeach ?>
 	</tbody>
-</table>-->
+</table>
+<hr/>
+<h4>Add New Category</h4>
+<form action="admin.php" method="POST">
+	<input type="hidden" name="action" value="edituser" />
+	<label>Category: </label>
+	<input type="text" id="category" name="category" />
+	<button type="submit">Add Category</button>
+</form>
