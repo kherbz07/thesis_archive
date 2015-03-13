@@ -167,6 +167,8 @@ class Model_thesis extends PDOConnector{
 			$stmt->bindParam(1, $category);
 			$stmt->execute();
 			$category_id = $stmt->lastInsertId();
+		}catch(PDOException $e){
+			print_r($e);
 		}
 		$this->close()
 		return $category_id;
@@ -179,6 +181,8 @@ class Model_thesis extends PDOConnector{
 			$stmt->bindParam(1, $category);
 			$stmt->bindParam(2, $id);
 			$stmt->execute();
+		}catch(PDOException $e){
+			print_r($e);
 		}
 		$this->close();
 	
@@ -190,6 +194,8 @@ class Model_thesis extends PDOConnector{
 			$stmt = $this->dbh->prepare($sql);
 			$stmt->bindParam(1, $id);
 			$stmt->execute();
+		}catch(PDOException $e){
+			print_r($e);
 		}
 		$this->close();
 	}
