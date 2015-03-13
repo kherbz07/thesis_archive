@@ -56,7 +56,7 @@ class Admin
 	public function index()
 	{
 		$users = $this->user_model->getAllUsers();
-		//$roles = $this->user_model->getAllRoles();
+		$roles = $this->user_model->getAllRoles();
 		//$categories = $this->user_model->getAllCategories();
 		include '../view/template/header.php';
 		include '../view/admin/index.php';

@@ -22,7 +22,7 @@ class Model_users extends PDOConnector{
 				$result['id'] = $rs['id'];
 				$result['username'] = $rs['username'];
 				$result['password'] = $rs['password'];
-				$result['role'] = $this->getRole($rs['id']);
+				$result['role'] = $this->getRole($rs['role_id']);
 				$result['first_name'] = $this->getUserInfo($rs['id'], 'first_name');
 				$result['middle_name'] = $this->getUserInfo($rs['id'], 'middle_name');
 				$result['last_name'] = $this->getUserInfo($rs['id'], 'last_name') ;
@@ -53,7 +53,7 @@ class Model_users extends PDOConnector{
 				$result[$counter]['id'] = $rs['id'];
 				$result[$counter]['username'] = $rs['username'];
 				$result[$counter]['password'] = $rs['password'];
-				$result[$counter]['role'] = $this->getRole($rs['id']);
+				$result[$counter]['role'] = $this->getRole($rs['role_id']);
 				$result[$counter]['first_name'] = $this->getUserInfo($rs['id'], 'first_name');
 				$result[$counter]['middle_name'] = $this->getUserInfo($rs['id'], 'middle_name');
 				$result[$counter]['last_name'] = $this->getUserInfo($rs['id'], 'last_name') ;
@@ -98,7 +98,7 @@ class Model_users extends PDOConnector{
 	public function editUser($data, $id){
 		$this->connect();
 		try{
-			$sql = "UPDATE tbl_users(username, password, role_id, user_info_id) VALUES(?, ?, ?) WHERE id = ?";
+			$sql = "UPDATE tbl_users SET username=?, password=?, role_id=? WHERE id = ?";
 			$stmt = $this->dbh->prepare($sql);
 			$stmt->bindParam(1, $data['username']);
 			$stmt->bindParam(2, $data['password']);
@@ -143,21 +143,21 @@ class Model_users extends PDOConnector{
 			$stmt->execute();
 
 			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		catch(PDOException $e){
+		}catch(PDOException $e){
 			print_r($e);
 		}
 		$this->close();
 		return $result;
 	}
 	public function getRole($id){
-		$sql = "SELECT role FROM tbl_roles WHERE id = ?";
+		$sql = "SELECT * FROM tbl_roles WHERE id = ?";
 		$stmt = $this->dbh->prepare($sql);
 		$stmt->bindParam(1, $id);
 		$stmt->execute();
 
 		$result = $stmt->fetch();
 
-		return $result['role'];
+		return $result;
 	}
 
 	//functions for tbl_user_info

@@ -6,6 +6,7 @@
 		<tr>
 			<th>Id</th>
 			<th>Username</th>
+			<th>Password</th>
 			<th>Role</th>
 			<th>First Name</th>
 			<th>Middle Name</th>
@@ -18,7 +19,9 @@
 			<tr>
 				<td><?= $user['id'] ?></td>
 				<td><?= $user['username'] ?></td>
-				<td><?= $user['role'] ?></td>
+				<td><?= $user['password'] ?></td>
+				<td style="display:none;"><?= $user['role']['id'] ?></td>
+				<td><?= $user['role']['role'] ?></td>
 				<td><?= $user['first_name'] ?></td>
 				<td><?= $user['middle_name'] ?></td>
 				<td><?= $user['last_name'] ?></td>
@@ -62,18 +65,20 @@
 	<input type="text" id="edit-ln" name="lastname" /><br/>
 	<label>Username:</label>
 	<input type="text" id="edit-un" name="username" /><br/>
-	<label>New Password:</label>
+	<label>Password:</label>
 	<input type="password" id="edit-pw" name="password" /><br/>
 	<label>Role:</label>
 	<select id="edit-role" name="role">
-		<option value="0">--Choose--</option>
-		<option value="1">Administrator</option>
-		<option value="2">Teacher</option>
+		<optgroup label="Select Role">
+			<?php foreach($roles as $role) : ?>
+				<option value="<?=$role['id']?>"><?=$role['role']?></option>
+			<?php endforeach ?>
+		</optgroup>
 	</select><br/>
 	<button type="submit">Edit User</button>
 </form>
 <hr/>
-<table border=1>
+<!--<table border=1>
 	<thead>
 		<tr>
 			<th>Id</th>
@@ -81,11 +86,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach($categories as $category) : ?>
+		<?php //foreach($categories as $category) : ?>
 			<tr>
 				<td><?= $category['id'] ?></td>
 				<td><?= $category['category'] ?></td>
 			</tr>
-		<?php endforeach ?>
+		<?php //endforeach ?>
 	</tbody>
-</table>
+</table>-->
