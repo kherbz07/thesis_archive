@@ -1,7 +1,7 @@
 <?php
-new Home();
+new Admin();
 
-class Home
+class Admin
 {
 	public function __construct()
 	{
@@ -13,6 +13,7 @@ class Home
 				header('location: home.php');
 				die();
 			}
+			
 		}
 		else
 		{
