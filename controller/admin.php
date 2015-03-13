@@ -1,10 +1,12 @@
 <?php
 require_once '../model/model_users.php';
+require_once '../model/model_thesis.php';
 new Admin();
 
 class Admin
 {
 	private $user_model;
+	private $thesis_model;
 
 	public function __construct()
 	{
@@ -18,6 +20,7 @@ class Admin
 			}
 
 			$this->user_model = new Model_users();
+			$this->thesis_model = new Model_thesis();
 
 			if (isset($_POST['action']))
 			{
@@ -57,7 +60,7 @@ class Admin
 	{
 		$users = $this->user_model->getAllUsers();
 		$roles = $this->user_model->getAllRoles();
-		$categories = $this->user_model->getAllCategories();
+		$categories = $this->thesis_model->getAllCategories();
 		include '../view/template/header.php';
 		include '../view/admin/index.php';
 		include '../view/template/footer.php';
