@@ -106,7 +106,7 @@ class Model_users extends PDOConnector{
 			$stmt->bindParam(4, $id);
 			$stmt->execute();
 
-			$this->editUserInfo($data['first_name'], $data['middle_name'], $data['last_name']), $id)
+			$this->editUserInfo($data['first_name'], $data['middle_name'], $data['last_name'], $id);
 
 		}catch(PDOException $e){
 			print_r($e);
