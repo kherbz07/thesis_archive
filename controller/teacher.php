@@ -13,7 +13,12 @@ class Teacher
 				header('location: teacher.php');
 				die();
 			}
-			if (isset($_GET['action']))
+			if (isset($_POST['action']))
+			{
+				$action = $_POST['action'];
+				$this->callAction($action);
+			}
+			else if (isset($_GET['action']))
 			{
 				$action = $_GET['action'];
 				$this->callAction($action);
@@ -27,6 +32,18 @@ class Teacher
 		{
 			header('location: ./');
 			die();
+		}
+	}
+
+	public function callAction($action)
+	{
+		if ($action == 'login')
+		{
+			$this->login();
+		}
+		else if ($action == 'logout')
+		{
+			$this->logout();
 		}
 	}
 
