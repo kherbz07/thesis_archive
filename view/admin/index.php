@@ -81,7 +81,7 @@
 	<select name="res_year[]">
 		<optgroup label="Select Year">
 			<?php foreach($years as $year) : ?>
-				<option value="<?=$years['id']?>"><?=$year['year']?></option>
+				<option value="<?=$year['id']?>"><?=$year['year']?></option>
 			<?php endforeach ?>
 		</optgroup>
 	</select>
@@ -99,7 +99,7 @@
 	<select name="res_year[]">
 		<optgroup label="Select Year">
 			<?php foreach($years as $year) : ?>
-				<option value="<?=$years['id']?>"><?=$year['year']?></option>
+				<option value="<?=$year['id']?>"><?=$year['year']?></option>
 			<?php endforeach ?>
 		</optgroup>
 	</select>
