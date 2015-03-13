@@ -15,23 +15,25 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach($users as $user) : ?>
-			<tr>
-				<td><?= $user['id'] ?></td>
-				<td><?= $user['username'] ?></td>
-				<td><?= $user['password'] ?></td>
-				<td style="display:none;"><?= $user['role']['id'] ?></td>
-				<td><?= $user['role']['role'] ?></td>
-				<td><?= $user['first_name'] ?></td>
-				<td><?= $user['middle_name'] ?></td>
-				<td><?= $user['last_name'] ?></td>
-				<td>
-					<button class="edit-btn">Edit</button>
-					<button class="del-btn">Delete</button>
-				</td>
-			</tr>
-			</tr>
-		<?php endforeach ?>
+		<?php if ($users != NULL) : ?>
+			<?php foreach($users as $user) : ?>
+				<tr>
+					<td><?= $user['id'] ?></td>
+					<td><?= $user['username'] ?></td>
+					<td><?= $user['password'] ?></td>
+					<td style="display:none;"><?= $user['role']['id'] ?></td>
+					<td><?= $user['role']['role'] ?></td>
+					<td><?= $user['first_name'] ?></td>
+					<td><?= $user['middle_name'] ?></td>
+					<td><?= $user['last_name'] ?></td>
+					<td>
+						<button class="edit-btn">Edit</button>
+						<button class="del-btn">Delete</button>
+					</td>
+				</tr>
+				</tr>
+			<?php endforeach ?>
+		<?php endif ?>
 	</tbody>
 </table>
 <hr/>
@@ -50,9 +52,11 @@
 	<input type="password" id="passsword" name="password" /><br/>
 	<label>Role:</label>
 	<select id="role" name="role">
-		<option value="0">--Choose--</option>
-		<option value="1">Administrator</option>
-		<option value="2">Teacher</option>
+		<optgroup label="Select Role">
+			<?php foreach($roles as $role) : ?>
+				<option value="<?=$role['id']?>"><?=$role['role']?></option>
+			<?php endforeach ?>
+		</optgroup>
 	</select><br/>
 	<button type="submit">Add User</button>
 </form>
@@ -91,16 +95,18 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach($categories as $category) : ?>
-			<tr>
-				<td><?= $category['id'] ?></td>
-				<td><?= $category['category'] ?></td>
-				<td>
-					<button class="edit-cat-btn">Edit</button>
-					<button class="del-cat-btn">Delete</button>
-				</td>
-			</tr>
-		<?php endforeach ?>
+		<?php if ($categories != NULL) : ?>
+			<?php foreach($categories as $category) : ?>
+				<tr>
+					<td><?= $category['id'] ?></td>
+					<td><?= $category['category'] ?></td>
+					<td>
+						<button class="edit-cat-btn">Edit</button>
+						<button class="del-cat-btn">Delete</button>
+					</td>
+				</tr>
+			<?php endforeach ?>
+		<?php endif	?>
 	</tbody>
 </table>
 <hr/>
@@ -151,3 +157,21 @@
 		<?php endif ?>
 	</tbody>
 </table>
+<hr/>
+<form action="admin.php" method="POST" enctype="multipart/data">
+	<input type="hidden" name="action" value="addthesis" />
+	<label>Thesis Title:</label>
+	<input type="text" id="title" name="title" />
+	<label>Abstract:</label>
+	<textarea id="abstract" name="abstract"></textarea>
+	<label>Scope and Limitation:</label>
+	<textarea id="scope" name="scope"></textarea>
+	<label>Year:</label>
+	<input type="text" id="year" name="year" />
+	<label>Category:</label>
+	<input type="text" id="" name="" />
+	<label>Thesis File (PDF Format):</label>
+	<input type="file" id="" name="" />
+	<label>System File:</label>
+	<input type="file" id="" name="" />
+</form>
