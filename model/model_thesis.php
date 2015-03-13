@@ -78,7 +78,7 @@ class Model_thesis extends PDOConnector{
 				$result[$counter]['abstract'] = $rs['abstract'];
 				$result[$counter]['scope'] = $rs['scope'];
 				$result[$counter]['year'] = $rs['year'];
-				$result[$counter]['category'] = $this->getCategory($rs['id']);
+				$result[$counter]['category'] = $this->getCategory($rs['category_id']);
 				$result[$counter]['pdf_path'] = $rs['pdf_path'];
 				$result[$counter]['system_path'] = $rs['system_path'];
 				$result[$counter]['researchers'] = $this->getResearchers($rs['id']);
@@ -123,8 +123,8 @@ class Model_thesis extends PDOConnector{
 			$results[$counter]['middle_name'] = $rs['middle_name'];
 			$results[$counter]['last_name'] = $rs['last_name'];
 			$results[$counter]['first_name'] = $rs['first_name'];
-			$results[$counter]['course'] = $this->getCourse($rs['id']);
-			$results[$counter]['year'] = $this->getYear($rs['id']);
+			$results[$counter]['course'] = $this->getCourse($rs['course_id']);
+			$results[$counter]['year'] = $this->getYear($rs['year_id']);
 			$counter++;
 		}
 
@@ -321,6 +321,10 @@ class Model_thesis extends PDOConnector{
 			$stmt->execute();
 
 			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			if (count($result) > 0)
+			{
+				$result = $result[0];
+			}
 		}catch(PDOException $e){
 			print_r($e);
 		}
