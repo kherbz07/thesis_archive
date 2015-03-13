@@ -23,9 +23,9 @@ class Model_users extends PDOConnector{
 				$result['username'] = $rs['username'];
 				$result['password'] = $rs['password'];
 				$result['role'] = $this->getRole($rs['id']);
-				$result['first_name'] = getUserInfo($rs['id'], 'first_name');
-				$result['middle_name'] = getUserInfo($rs['id'], 'middle_name');
-				$result['last_name'] = getUserInfo($rs['id'], 'last_name') ;
+				$result['first_name'] = $this->getUserInfo($rs['id'], 'first_name');
+				$result['middle_name'] = $this->getUserInfo($rs['id'], 'middle_name');
+				$result['last_name'] = $this->getUserInfo($rs['id'], 'last_name') ;
 			}
 		}catch(PDOException $e){
 			print_r($e);
@@ -67,7 +67,11 @@ class Model_users extends PDOConnector{
 
 		return $result;
 	}
-
+	/**
+		function addUser($data) <-- parameter is an array
+		for: registering a teacher
+		return: the recently added user's id
+	*/
 	public function addUser($data){
 		$user_id = null;
 		$this->connect();
@@ -85,6 +89,23 @@ class Model_users extends PDOConnector{
 		}
 		$this->close();
 		return $user_id;
+	}
+	/**
+		function deleteUser($id)
+		for: deleting a user
+		return: void
+	*/
+	public function deleteUser($id){
+		$this->connect();
+		try{
+			$sql = "DELETE FROM tbl_users WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $id);
+			$stmt->execute();
+		}catch(PDOException $e){
+			print_r($e);
+		}
+		$this->close();
 	}
 
 	//--------------------other functions for user-------------------------//
