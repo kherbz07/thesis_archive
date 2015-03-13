@@ -150,12 +150,13 @@ class Model_thesis extends PDOConnector{
 		return $result['category'];
 	}
 	function getAllCategories(){
+		$this->connect();
 		$sql = "SELECT * FROM tbl_category";
 		$stmt = $this->dbh->prepare($sql);
 		$stmt->execute();
 
 		$result = $stmt->fetchALL(PDO::FETCH_ASSOC);
-
+		$this->close();
 		return $result;	
 	}
 	function addCategory($category){
@@ -170,7 +171,7 @@ class Model_thesis extends PDOConnector{
 		}catch(PDOException $e){
 			print_r($e);
 		}
-		$this->close()
+		$this->close();
 		return $category_id;
 	}
 	function editCategory($category, $id){
