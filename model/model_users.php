@@ -117,6 +117,11 @@ class Model_users extends PDOConnector{
 		$sql = "INSERT INTO tbl_user_info(first_name, middle_name, last_name) VALUES(?,?,?)";
 		$stmt = $this->dbh->prepare($sql);
 		$stmt->bindParam(1, $firstname);
+		$stmt->bindParam(2, $middlename);
+		$stmt->bindParam(4, $lastname);
+		$stmt->execute();
+
+		return $stmt->lastInsertId();
 	}
 
 
