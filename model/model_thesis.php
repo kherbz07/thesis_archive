@@ -159,31 +159,32 @@ class Model_thesis extends PDOConnector{
 		return $result['category'];
 	}
 	function getAllCategories(){
+		$this->connect();
 		$sql = "SELECT * FROM tbl_category";
 		$stmt = $this->dbh->prepare($sql);
 		$stmt->execute();
 
 		$result = $stmt->fetchALL(PDO::FETCH_ASSOC);
-
+		$this->close();
 		return $result;	
 	}
 	function addCategory($category){
 		$category_id = null;
-		$this->connect()
+		$this->connect();
 		try{
 			$sql = "INSERT INTO tbl_category(category) VALUES(?)";
 			$stmt = $this->dbh->prepare($sql);
 			$stmt->bindParam(1, $category);
 			$stmt->execute();
-			$category_id = $stmt->lastInsertId();
+			$category_id = $this->dbh->lastInsertId();
 		}catch(PDOException $e){
 			print_r($e);
 		}
-		$this->close()
+		$this->close();
 		return $category_id;
 	}
 	function editCategory($category, $id){
-		$this->connect()
+		$this->connect();
 		try{
 			$sql = "UPDATE tbl_category SET category = ? WHERE id = ?";
 			$stmt = $this->dbh->prepare($sql);
@@ -197,7 +198,7 @@ class Model_thesis extends PDOConnector{
 	
 	}
 	function deleteCategory($id){
-		$this->connect()
+		$this->connect();
 		try{
 			$sql = "DELETE FROM tbl_category WHERE id = ?";
 			$stmt = $this->dbh->prepare($sql);
