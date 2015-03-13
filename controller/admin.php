@@ -54,6 +54,10 @@ class Admin
 		{
 			$this->logout();
 		}
+		else if ($action == 'addcategory')
+		{
+			$this->addCategory();
+		}
 	}
 
 	public function index()
@@ -112,6 +116,21 @@ class Admin
 						'password' => $password,
 						'role_id' => $role_id);
 				$this->user_model->addUser($user);
+			}
+		}
+		header('location: admin.php');
+		die();
+	}
+
+	public function addCategory()
+	{
+		if (isset($_POST['category']))
+		{
+			$category = addslashes($_POST['category']);
+
+			if ($category != '')
+			{
+				$this->thesis_model->addCategory($category);
 			}
 		}
 		header('location: admin.php');

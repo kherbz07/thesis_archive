@@ -167,7 +167,7 @@ class Model_thesis extends PDOConnector{
 			$stmt = $this->dbh->prepare($sql);
 			$stmt->bindParam(1, $category);
 			$stmt->execute();
-			$category_id = $stmt->lastInsertId();
+			$category_id = $this->dbh->lastInsertId();
 		}catch(PDOException $e){
 			print_r($e);
 		}

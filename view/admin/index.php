@@ -87,19 +87,19 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php //foreach($categories as $category) : ?>
+		<?php foreach($categories as $category) : ?>
 			<tr>
 				<td><?= $category['id'] ?></td>
 				<td><?= $category['category'] ?></td>
 				<td><button class="edit-cat-btn">Edit</button></td>
 			</tr>
-		<?php //endforeach ?>
+		<?php endforeach ?>
 	</tbody>
 </table>
 <hr/>
 <h4>Add New Category</h4>
 <form action="admin.php" method="POST">
-	<input type="hidden" name="action" value="edituser" />
+	<input type="hidden" name="action" value="addcategory" />
 	<label>Category: </label>
 	<input type="text" id="category" name="category" />
 	<button type="submit">Add Category</button>
