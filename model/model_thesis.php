@@ -122,7 +122,14 @@ class Model_thesis extends PDOConnector{
 		return $results;
 	}
 	function editResearchers($data, $thesis_id){
-
+		$this->connect();
+		try{
+			$this->deleteResearchers($thesis_id);
+			$this->addResearchers($data, $thesis_id);
+		}catch(PDOExcetion $e){
+			print_r($e);
+		}
+		$this->close();
 	}
 	function deleteResearchers($thesis_id){
 		$sql = "DELETE FROM tbl_researchers WHERE thesis_id = ?";
@@ -160,6 +167,8 @@ class Model_thesis extends PDOConnector{
 			$stmt->bindParam(1, $category);
 			$stmt->execute();
 			$category_id = $stmt->lastInsertId();
+		}catch(PDOException $e){
+			print_r($e);
 		}
 		$this->close()
 		return $category_id;
@@ -172,6 +181,8 @@ class Model_thesis extends PDOConnector{
 			$stmt->bindParam(1, $category);
 			$stmt->bindParam(2, $id);
 			$stmt->execute();
+		}catch(PDOException $e){
+			print_r($e);
 		}
 		$this->close();
 	
@@ -183,6 +194,8 @@ class Model_thesis extends PDOConnector{
 			$stmt = $this->dbh->prepare($sql);
 			$stmt->bindParam(1, $id);
 			$stmt->execute();
+		}catch(PDOException $e){
+			print_r($e);
 		}
 		$this->close();
 	}
