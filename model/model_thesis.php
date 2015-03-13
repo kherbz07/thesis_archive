@@ -122,7 +122,14 @@ class Model_thesis extends PDOConnector{
 		return $results;
 	}
 	function editResearchers($data, $thesis_id){
-
+		$this->connect();
+		try{
+			$this->deleteResearchers($thesis_id);
+			$this->addResearchers($data, $thesis_id);
+		}catch(PDOExcetion $e){
+			print_r($e);
+		}
+		$this->close();
 	}
 	function deleteResearchers($thesis_id){
 		$sql = "DELETE FROM tbl_researchers WHERE thesis_id = ?";
