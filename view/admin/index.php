@@ -135,7 +135,9 @@
 					<td><?=$thesis['id']?></td>
 					<td><?=$thesis['title']?></td>
 					<td>
-						<?=$thesis['researchers']?>
+						<?php foreach ($thesis['researchers'] as $researcher) : ?>
+							<?=$researcher['first_name'] . $researcher['middle_name'] . $researcher['last_name']?><br/>
+						<?php endforeach ?>
 					</td>
 					<td><?=$thesis['abstract']?></td>
 					<td><?=$thesis['scope']?></td>

@@ -66,8 +66,6 @@ class Admin
 		$roles = $this->user_model->getAllRoles();
 		$categories = $this->thesis_model->getAllCategories();
 		$theses = $this->thesis_model->getAllThesis();
-		echo 'Theses: ';
-		print_r($theses);
 		include '../view/template/header.php';
 		include '../view/admin/index.php';
 		include '../view/template/footer.php';
