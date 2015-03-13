@@ -104,12 +104,21 @@ class Admin
 	{
 		if (isset($_POST['firstname']) && isset($_POST['middlename']) && isset($_POST['lastname']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role']))
 		{
+<<<<<<< HEAD
+			$firstname = addslashes($_POST['firstname']);
+			$middlename = addslashes($_POST['middlename']);
+			$lastname = addslashes($_POST['lastname']);
+			$username = addslashes($_POST['username']);
+			$password = md5(addslashes($_POST['password']));
+			$role_id = addslashes($_POST['role']);
+=======
 			$firstname = $_POST['firstname'];
 			$middlename = $_POST['middlename'];
 			$lastname = $_POST['lastname'];
 			$username = $_POST['username'];
 			$password = $_POST['password'];
 			$role_id = $_POST['role'];
+>>>>>>> 7380987f69576adf935e178c78e02ccf97d0f12e
 
 			if ($firstname != '' && $middlename != '' && $lastname != '' && $username != '' && $password != '')
 			{

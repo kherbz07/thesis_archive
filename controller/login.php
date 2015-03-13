@@ -40,8 +40,8 @@ class Login
 	{
 		if (isset($_POST['username']) && isset($_POST['password']))
 		{
-			$username = $_POST['username'];
-			$password = $_POST['password'];
+			$username = addslashes($_POST['username']);
+			$password = md5(addslashes($_POST['password']));
 
 			$user_model = new Model_users();
 			$user = $user_model->getUserWhere($username, $password);

@@ -35,7 +35,7 @@
 						</ul>
 					</td>
 					<td>
-						<button>Edit</button>
+						<button><a href="teacher.php?action=edit&id=<?php echo $thesis['id'] ?>">Edit</a></button>
 					</td>
 					<td>
 						
