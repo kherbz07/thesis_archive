@@ -81,8 +81,36 @@ class Model_thesis extends PDOConnector{
 				$result[$counter]['category'] = $this->getCategory($rs['category_id']);
 				$result[$counter]['pdf_path'] = $rs['pdf_path'];
 				$result[$counter]['system_path'] = $rs['system_path'];
-				$result[$counter]['researchers'] = $this->getResearchers($rs['id']);
+				$result[$counter]['researchers'] = $this->getResearchers($rs['thesis_id']);
 				$counter++;
+
+			}
+		}catch(PDOExcetion $e){
+			print_r($e);
+		}
+		$this->close();
+
+		return $result;
+	}
+	public function getThesis($id){
+		$result = null;
+		$this->connect();
+		try{
+			$sql = "SELECT * FROM tbl_thesis WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $id);
+			$stmt->execute();
+
+			while($rs = $stmt->fetch()){
+				$result['id'] = $rs['id'];
+				$result['title'] = $rs['title'];
+				$result['abstract'] = $rs['abstract'];
+				$result['scope'] = $rs['scope'];
+				$result['year'] = $rs['year'];
+				$result['category'] = $this->getCategory($rs['category_id']);
+				$result['pdf_path'] = $rs['pdf_path'];
+				$result['system_path'] = $rs['system_path'];
+				$result['researchers'] = $this->getResearchers($rs['thesis_id']);
 
 			}
 		}catch(PDOExcetion $e){
