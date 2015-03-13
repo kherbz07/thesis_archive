@@ -113,6 +113,28 @@ class Model_thesis extends PDOConnector{
 		$this->close()
 		return $category_id;
 	}
+	function editCategory($category, $id){
+		$this->connect()
+		try{
+			$sql = "UPDATE tbl_category(category) VALUES(?) WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $category);
+			$stmt->bindParam(2, $id);
+			$stmt->execute();
+		}
+		$this->close()
+	
+	}
+	function deleteCategory($id){
+		$this->connect()
+		try{
+			$sql = "DELETE FROM tbl_category WHERE id = ?";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam(1, $id);
+			$stmt->execute();
+		}
+		$this->close()
+	}
 
 
 }
